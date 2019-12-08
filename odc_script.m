@@ -14,4 +14,7 @@ sk = 0.1;
 
 [dict_yk, minI] = method_cauchy_constant_step(dict_ident_data, dict_init_data, tolerance, sk);
 
+%% Plot results
+plot_results(minI, 1);
+
 end
