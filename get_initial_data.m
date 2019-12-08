@@ -6,16 +6,16 @@ function [dict_ident_data, dict_init_data] = get_initial_data()
 %% Get the identification data
 dict_ident_data = containers.Map;
 
-dict_ident_data('a0') = 5;
-dict_ident_data('a1') = 4;
-dict_ident_data('a2') = 9;
-dict_ident_data('a3') = 6;
+dict_ident_data('a0') = randi(10);
+dict_ident_data('a1') = randi(10);
+dict_ident_data('a2') = randi(10);
+dict_ident_data('a3') = randi(10);
 
 %% Get the initial values
 dict_init_data = containers.Map;
 
-dict_init_data('y1') = 6;
-dict_init_data('y2') = 10;
-dict_init_data('y3') = 3;
+dict_init_data('y10') = randi(10);
+dict_init_data('y20') = randi(10);
+dict_init_data('y30') = randi(10);
 
 end
