@@ -7,7 +7,7 @@ end
 
 %% Plot
 figure(index);
-plot(output);
+plot(output, '-bs');
 grid on;
 xlabel('iterations');
 ylabel('I');
