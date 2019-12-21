@@ -25,6 +25,11 @@ tolerance = 0.01;
 
 [dict_yk, minI, sk] = method_fletcher_powell(dict_ident_data, dict_init_data, tolerance);
 
+%% Use Fletcher-Powell method for a variable step
+tolerance = 0.01;
+
+[dict_yk, minI, sk] = method_fletcher_reeves(dict_ident_data, dict_init_data, tolerance);
+
 %% Plot results
 plot_results(minI, 1);
 

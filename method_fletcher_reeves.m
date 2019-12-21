@@ -1,7 +1,7 @@
 %% Description
-% This method implements the Fletcher-Powell Optimization Method with a
+% This method implements the Fletcher-Reeves Optimization Method with a
 % variable step
-function [dict_yk, minI, sk_all] = method_fletcher_powell(dict_ident_data, dict_init_data, tolerance)
+function [dict_yk, minI, sk_all] = method_fletcher_reeves(dict_ident_data, dict_init_data, tolerance)
 %% Initialize dictionaries
 dict_yk = containers.Map;
 
@@ -31,23 +31,22 @@ yk_0 = [...
 F0 = 0;
 F1 = get_function_value(dict_ident_data, dict_yk);
 
+Bk = 0;
+
 sk_all = [];
 minI = F1;
 
-%% Initialize H
-Hk = randn(length(gradient_0));
-Hk = Hk * Hk;
-
-%% Start Fletcher-Powell Algorithm
+%% Start Fletcher-Reeves Algorithm
 i = 0;
+direction = zeros(size(gradient_0));
 while (abs(F1 - F0) > tolerance)
     %% Get direction
-    direction = -Hk*gradient_0;
+    direction = -gradient_0 + Bk * direction;
     
     %% Get step
     sk = method_general_update_step(dict_ident_data, dict_yk, direction);
     sk_all = [sk_all sk];
-    
+        
     %% Calculate y(k + 1)
     yk_1 = yk_0 + sk * direction;
     
@@ -59,13 +58,9 @@ while (abs(F1 - F0) > tolerance)
         2*dict_ident_data('a3')*yk_1(3)...
     ];
 
-    %% Calculate conjugal directions
-    delta_x = yk_1 - yk_0;
-    delta_g = gradient_1 - gradient_0;
-    
-    Ak = (delta_x * (delta_x')) / (delta_x' * delta_g);
-    Bk = (Hk * delta_g * (delta_g') * Hk) / ((delta_g') * Hk * delta_g);
-    Hk = Hk + Ak + Bk;
+    %% Update Bk
+%     Bk = (gradient_1' * gradient_1)/(gradient_0' * gradient_0);
+    Bk = norm(gradient_1)^2 / norm(gradient_0);
     
     %% Update dict_yk
     dict_yk('y1') = [dict_yk('y1'); yk_1(1)];
