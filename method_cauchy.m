@@ -36,7 +36,8 @@ i = 0;
 while (norm(gradient) > tolerance)
     %% Update step
     if (variable_step)
-        sk = method_cauchy_update_step(dict_ident_data, dict_yk);
+%         sk = method_cauchy_update_step(dict_ident_data, dict_yk);
+        sk = method_general_update_step(dict_ident_data, dict_yk, -gradient);
         sk_all = [sk_all sk];
     end
     
@@ -60,8 +61,13 @@ while (norm(gradient) > tolerance)
     
     %% Debug mode
     i = i + 1;
-    debug_message = strcat('i = ', num2str(i), ', min(I) = ', num2str(minI(end)), ';');
+    debug_message = strcat('i = ', num2str(i), ', sk = ', num2str(sk), ', min(I) = ', num2str(minI(end)), ';');
     display(debug_message);
+    
+    if (minI(end) == -inf)
+        break
+    end
+    
 end
 
 end
