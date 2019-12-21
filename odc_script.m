@@ -19,16 +19,33 @@ tolerance = 0.01;
 
 [dict_yk, minI, sk] = method_cauchy(dict_ident_data, dict_init_data, tolerance);
 
+%% Use Fletcher-Powell method for a constant step
+tolerance = 0.01;
+sk = 0.1;
+
+[dict_yk, minI, sk] = method_fletcher_powell(dict_ident_data, dict_init_data, tolerance, sk);
 
 %% Use Fletcher-Powell method for a variable step
 tolerance = 0.01;
 
 [dict_yk, minI, sk] = method_fletcher_powell(dict_ident_data, dict_init_data, tolerance);
 
+%% Use Fletcher-Reeves method for a constant step
+tolerance = 0.01;
+sk = 0.1;
+
+[dict_yk, minI, sk] = method_fletcher_reeves(dict_ident_data, dict_init_data, tolerance, sk);
+
 %% Use Fletcher-Reeves method for a variable step
 tolerance = 0.01;
 
 [dict_yk, minI, sk] = method_fletcher_reeves(dict_ident_data, dict_init_data, tolerance);
+
+%% Use Newton-Raphson method for a constant step
+tolerance = 0.01;
+sk = 0.01;
+
+[dict_yk, minI, sk] = method_newton_raphson(dict_ident_data, dict_init_data, tolerance, sk);
 
 %% Use Newton-Raphson method for a variable step
 tolerance = 0.01;

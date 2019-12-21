@@ -1,7 +1,14 @@
 %% Description
 % This method implements the Fletcher-Reeves Optimization Method with a
 % variable step
-function [dict_yk, minI, sk_all] = method_fletcher_reeves(dict_ident_data, dict_init_data, tolerance)
+function [dict_yk, minI, sk_all] = method_fletcher_reeves(dict_ident_data, dict_init_data, tolerance, sk)
+%% Check initial parameters
+if (nargin < 4)
+    variable_step = 1;
+else
+    variable_step = 0;
+end
+
 %% Initialize dictionaries
 dict_yk = containers.Map;
 
@@ -43,9 +50,11 @@ while (abs(F1 - F0) > tolerance)
     %% Get direction
     direction = -gradient_0 + Bk * direction;
     
-    %% Get step
-    sk = method_general_update_step(dict_ident_data, dict_yk, direction);
-    sk_all = [sk_all sk];
+    %% Update step
+    if (variable_step)
+        sk = method_general_update_step(dict_ident_data, dict_yk, direction);
+        sk_all = [sk_all sk];
+    end
         
     %% Calculate y(k + 1)
     yk_1 = yk_0 + sk * direction;
