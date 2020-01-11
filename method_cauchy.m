@@ -56,6 +56,11 @@ while (norm(gradient) > tolerance)
     dict_yk('y2') = [dict_yk('y2'); yk(2)];
     dict_yk('y3') = [dict_yk('y3'); yk(3)];
    
+    %% Exit redundant iterations
+    if (length(minI) >= 2 && norm(minI(end) - minI(end - 1)) < 10^-5)
+        break;
+    end
+    
     %% Add the new minI
     minI = [minI get_function_value(dict_ident_data, dict_yk)];
     
@@ -67,7 +72,6 @@ while (norm(gradient) > tolerance)
     if (minI(end) == -inf)
         break
     end
-    
 end
 
 end

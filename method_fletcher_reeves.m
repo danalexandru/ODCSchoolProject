@@ -68,13 +68,18 @@ while (abs(F1 - F0) > tolerance)
     ];
 
     %% Update Bk
-%     Bk = (gradient_1' * gradient_1)/(gradient_0' * gradient_0);
-    Bk = norm(gradient_1)^2 / norm(gradient_0);
+    Bk = (gradient_1' * gradient_1)/(gradient_0' * gradient_0);
+%     Bk = norm(gradient_1)^2 / norm(gradient_0);
     
     %% Update dict_yk
     dict_yk('y1') = [dict_yk('y1'); yk_1(1)];
     dict_yk('y2') = [dict_yk('y2'); yk_1(2)];
     dict_yk('y3') = [dict_yk('y3'); yk_1(3)];
+    
+    %% Exit redundant iterations
+    if (length(minI) >= 3 && (norm(minI(end) - minI(end - 1)) < 0.1 || norm(minI(end) - minI(end - 2)) < 0.1))
+        break;
+    end
     
     %% Calculate new minimum
     F0 = F1;

@@ -16,8 +16,8 @@ dict_ident_data = get_identification_data('castr_odc_project_dataset.csv');
 %% Get the initial values
 dict_init_data = containers.Map;
 
-dict_init_data('y10') = randn(1);
-dict_init_data('y20') = randn(1);
-dict_init_data('y30') = randn(1);
+dict_init_data('y10') = -0.0549; %randn(1);
+dict_init_data('y20') = 0.9111; %randn(1);
+dict_init_data('y30') = 0.5946; %randn(1);
 
 end

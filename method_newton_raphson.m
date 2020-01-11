@@ -84,6 +84,11 @@ while (abs(F1 - F0) > tolerance)
     dict_yk('y1') = [dict_yk('y1'); yk_1(1)];
     dict_yk('y2') = [dict_yk('y2'); yk_1(2)];
     dict_yk('y3') = [dict_yk('y3'); yk_1(3)];
+
+    %% Exit redundant iterations
+    if (length(minI) >= 3 && (norm(minI(end) - minI(end - 1)) < 10^-5 || norm(minI(end) - minI(end - 2)) < 10^-5))
+        break;
+    end
     
     %% Calculate new minimum
     F0 = F1;

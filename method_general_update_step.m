@@ -24,7 +24,10 @@ beta_1 = d2;
 beta_0 = y2;
 
 %% Return step
-I = @(s) (alpha_3 * s^3 + alpha_2 * s^2 + alpha_1 * s + alpha_0) / (beta_1 * s + beta_0);
-sk = fminsearch(I, rand(1));
+% I = @(s) (alpha_3 * s^3 + alpha_2 * s^2 + alpha_1 * s + alpha_0) / (beta_1 * s + beta_0);
+% sk = fminsearch(I, rand(1));
+syms s;
+I = (alpha_3 * s^3 + alpha_2 * s^2 + alpha_1 * s + alpha_0) / (beta_1 * s + beta_0);
+sk = double(mean(solve(I, s)));
 
 end
